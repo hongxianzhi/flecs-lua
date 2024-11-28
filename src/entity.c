@@ -85,7 +85,7 @@ int new_entity(lua_State *L)
     /* create an entity, the following functions will take the same id */
     if(!e && args) e = ecs_new_id(w);
 
-    if(e && !ecs_is_alive(w, e)) ecs_ensure(w, e);
+    if(e && !ecs_is_alive(w, e)) ecs_make_alive(w, e);
 
     ecs_entity_t scope = ecs_get_scope(w);
     if(scope) ecs_add_pair(w, e, EcsChildOf, scope);
@@ -284,7 +284,7 @@ int lookup_symbol(lua_State *L)
 
     const char *name = luaL_checkstring(L, 1);
 
-    ecs_entity_t e = ecs_lookup_symbol(w, name, true);
+    ecs_entity_t e = ecs_lookup_symbol(w, name, true, true);
 
     lua_pushinteger(L, e);
 
@@ -388,7 +388,7 @@ int ensure(lua_State *L)
 
     ecs_entity_t e = luaL_checkinteger(L, 1);
 
-    ecs_ensure(w, e);
+    ecs_make_alive(w, e);
 
     return 0;
 }

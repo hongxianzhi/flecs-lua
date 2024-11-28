@@ -27,6 +27,10 @@
     #define FLECS_TERM_DESC_MAX ECS_TERM_DESC_CACHE_SIZE
 #endif
 
+#if !defined(ecs_singleton_get_mut)
+    #define ecs_singleton_get_mut(world, comp) ecs_get_mut(world, ecs_id(comp), comp)
+#endif
+
 //Compat stuff end
 
 extern ECS_COMPONENT_DECLARE(EcsLuaHost);
